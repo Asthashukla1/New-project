@@ -38,20 +38,20 @@ async function loginUser(req,res) {
     const user = await userModel.findOne({email})
 
     if(!user){
-        res.status(400).json({
+        return res.status(400).json({
             message: "Invalid email or password"
         })
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if(!isPasswordValid){
-         res.status(400).json({
+         return res.status(400).json({
             message: "Invalid email or password"
         })
     }
     const token = jwt.sign({id:user._id,},process.env.JWT_SECRET)
 
     res.cookie('token', token)
-    res.status(200).json({
+    return res.status(200).json({
         message: "User logged in successfully",
         user:{
             _id: user._id,
@@ -101,20 +101,20 @@ async function loginFoodPartner(req,res) {
     const foodpartner = await foodpartnerModel.findOne({email})
 
     if(!foodpartner){
-        res.status(400).json({
+        return res.status(400).json({
             message: "Invalid email or password"
         })
     }
     const isPasswordValid = await bcrypt.compare(password, foodpartner.password);
     if(!isPasswordValid){
-         res.status(400).json({
+         return res.status(400).json({
             message: "Invalid email or password"
         })
     }
     const token = jwt.sign({id:foodpartner._id,},process.env.JWT_SECRET)
 
     res.cookie('token', token)
-    res.status(200).json({
+    return res.status(200).json({
         message: "User logged in successfully",
         foodpartner:{
             _id: foodpartner._id,
@@ -129,8 +129,6 @@ function logoutFoodPartner(req,res) {
         message: "User logged out successfully"
     })
 }
-
-
 
 module.exports ={
     registerUser,

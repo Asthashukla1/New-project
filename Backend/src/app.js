@@ -15,7 +15,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/api/auth', authRoutes);  //auth related api
-app.use('/api/food', authRoutes);  //food related api
+app.use('/api/food', foodRoutes);  //food related api
 
 
 module.exports = app;
