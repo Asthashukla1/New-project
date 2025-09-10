@@ -1,21 +1,32 @@
-/* CSS Theme Variables (Light & Dark via system preference) */
+/* ==========================================================
+   Global Theme Variables (Light & Dark via system preference)
+   ========================================================== */
 :root {
-  --color-bg: #f9fafb;
-  --color-surface: #ffffff;
-  --color-surface-alt: #f1f5f9;
-  --color-border: #e2e8f0;
-  --color-text: #0f172a;
-  --color-text-secondary: #475569;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-danger: #dc2626;
+  /* Colors */
+  --color-bg: #f9fafb;            /* page background */
+  --color-surface: #ffffff;       /* cards, panels */
+  --color-surface-alt: #f1f5f9;   /* secondary panels */
+  --color-border: #e2e8f0;        /* divider lines */
+  --color-text: #0f172a;          /* primary text */
+  --color-text-secondary: #475569;/* muted text */
+  --color-accent: #2563eb;        /* primary accent */
+  --color-accent-hover: #1d4ed8;  /* accent hover */
+  --color-danger: #dc2626;        /* error/destructive */
 
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  /* Typography */
+  --font-stack: system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 20px;
+  --font-xl: 24px;
+  --font-2xl: 32px;
+  --font-regular: 400;
+  --font-semibold: 500;
+  --font-bold: 600;
 
-  --font-stack: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -24,35 +35,56 @@
   --space-6: 24px;
   --space-8: 32px;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
-  --shadow-md: 0 4px 12px -2px rgba(0,0,0,.08),0 2px 4px -2px rgba(0,0,0,.06);
+  /* Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
 
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px -2px rgba(0,0,0,0.08),
+               0 2px 4px -2px rgba(0,0,0,0.06);
+
+  /* Transition */
   --transition-base: 120ms cubic-bezier(.4,0,.2,1);
+
+  /* Z-index */
+  --z-overlay: 1000;
+  --z-modal: 1100;
+  --z-toast: 1200;
 }
 
+/* ======================
+   Dark Theme Overrides
+   ====================== */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0f172a; /* slate-900 */
-    --color-surface: #1e293b; /* slate-800 */
-    --color-surface-alt: #24324a; /* custom */
-    --color-border: #334155; /* slate-700 */
-    --color-text: #f1f5f9; /* slate-100 */
-    --color-text-secondary: #94a3b8; /* slate-400 */
-    --color-accent: #3b82f6; /* blue-500 */
-    --color-accent-hover: #60a5fa; /* blue-400 */
-    --color-danger: #f87171; /* red-400 */
-    --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
-    --shadow-md: 0 4px 18px -4px rgba(0,0,0,.5),0 2px 6px -2px rgba(0,0,0,.4);
+    --color-bg: #0f172a;            /* slate-900 */
+    --color-surface: #1e293b;       /* slate-800 */
+    --color-surface-alt: #24324a;   /* custom darker panel */
+    --color-border: #334155;        /* slate-700 */
+    --color-text: #f1f5f9;          /* slate-100 */
+    --color-text-secondary: #94a3b8;/* slate-400 */
+    --color-accent: #3b82f6;        /* blue-500 */
+    --color-accent-hover: #60a5fa;  /* blue-400 */
+    --color-danger: #f87171;        /* red-400 */
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
+    --shadow-md: 0 4px 18px -4px rgba(0,0,0,0.5),
+                 0 2px 6px -2px rgba(0,0,0,0.4);
   }
 }
 
-/* Base element theming (can be imported once globally) */
+/* ======================
+   Base Element Styling
+   ====================== */
 body {
   font-family: var(--font-stack);
   background: var(--color-bg);
   color: var(--color-text);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  line-height: 1.4;
+  margin: 0;
 }
 
 a {
@@ -60,7 +92,63 @@ a {
   text-decoration: none;
   transition: color var(--transition-base);
 }
+a:hover,
+a:focus-visible {
+  color: var(--color-accent-hover);
+}
 
-a:hover, a:focus-visible { color: var(--color-accent-hover); }
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
 
-::selection { background: var(--color-accent); color: #fff; }
+/* ======================
+   Utility Components
+   ====================== */
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-sm);
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-base), box-shadow var(--transition-base);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+/* Video Container (Reels style) */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 420px; /* prevent over-stretching on desktops */
+  margin: auto;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: #000;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
